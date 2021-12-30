@@ -1,0 +1,64 @@
+###################################
+Linear Regression
+###################################
+Test set evaluation:
+MAE: 3.03715617086481
+MSE: 13.255694831417221
+RMSE: 3.640837105861401
+R2 Square 0.9770967382032691
+__________________________________
+Train set evaluation:
+MAE: 2.7980393957844445
+MSE: 13.02629383325512
+RMSE: 3.6091957321895305
+R2 Square 0.9756403380684348
+__________________________________
+                   Coefficient
+RaisedHands           6.637684
+VisITedResources     11.212066
+AnnouncementsView     4.709670
+Discussion            6.683364
+###################################
+Ridge Regression
+###################################
+Test set evaluation:
+MAE: 3.954111832273671
+MSE: 24.993394752998444
+RMSE: 4.999339431664792
+R2 Square 0.956816276287513
+__________________________________
+Train set evaluation:
+MAE: 3.5697760449962797
+MSE: 21.06144794745694
+RMSE: 4.589275318332617
+R2 Square 0.9606142961031992
+__________________________________
+                   Coefficient
+RaisedHands           6.503092
+VisITedResources      8.714492
+AnnouncementsView     5.169537
+Discussion            5.446862
+###################################
+Lasso Regression
+###################################
+Test set evaluation:
+MAE: 3.0486966489893326
+MSE: 13.407763317361194
+RMSE: 3.661661278349104
+R2 Square 0.9768339934442126
+__________________________________
+Train set evaluation:
+MAE: 2.7905147348297548
+MSE: 13.043625595924349
+RMSE: 3.6115959901301737
+R2 Square 0.9756079270170103
+__________________________________
+                   Coefficient
+RaisedHands           6.618372
+VisITedResources     11.156064
+AnnouncementsView     4.681881
+Discussion            6.612540
+               Model       MAE        MSE      RMSE  R2 Square  Cross Validation
+0  Linear Regression  3.037156  13.255695  3.640837   0.977097          0.962447
+1   Ridge Regression  3.954112  24.993395  4.999339   0.956816          0.962447
+2   Lasso Regression  3.048697  13.407763  3.661661   0.976834          0.962459
