@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, roc_auc_score, roc_curve
+from sklearn.metrics import confusion_matrix, classification_report, roc_auc_score, roc_curve
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -19,7 +19,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 def cross_val(model):
-    pred = cross_val_score(model, X, y, cv=10)
+    pred = cross_val_score(model, X, y_1, cv=10)
     return pred.mean()
 
 def print_evaluate(true, predicted):  
@@ -109,6 +109,45 @@ def lasso_regression(X,y):
 
     return coeff_df, y_test, y_train, test_pred, train_pred
 
+def logistic_regression (data, X):
+    data.Class=[1 if i=='H' else 0 for i in data.Class]
+    y = data.Class
+    x=(X-np.min(X))/(np.max(X)-np.min(X))
+    x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=52)
+    #fit
+    model=LogisticRegression(C = 0.5, max_iter = 500)
+    model_fit= model.fit(x_train,y_train)
+    # coeff_df = pd.DataFrame(model.coef_, X.columns, columns=['Coefficient'])
+    pred = model_fit.predict(x_test)
+
+    print('Classification Report of Logistic Regression')
+    print()
+    print(classification_report(y_test, pred, target_names=['High Class', 'Non-High Class']))
+    print('==========================================================')
+    print('Confusion Matrix of Logistic Regression')
+    print()
+    print(pd.DataFrame(confusion_matrix(y_test,pred)))
+
+    return model_fit, x_test, y_test
+
+def ROC_plot(model, x_test, y_test):
+    plt.rcParams['figure.figsize'] = [10,8]
+    plt.style.use("bmh")
+    plt.title("ROC CURVE", fontsize = 15)
+    plt.xlabel("False Positive Rate", fontsize = 15)
+    plt.ylabel("True Positive Rate", fontsize = 15)
+
+    prob = model.predict_proba(x_test)
+    prob_positive = prob[:,1]
+    fpr, tpr, threshold = roc_curve(y_test, prob_positive)
+    plt.plot(fpr, tpr, color = 'red', label = 'Logistic Regression')
+    plt.plot([0,1],[0,1], linestyle = '--', color = 'black', label = 'Random Classifier')
+    plt.gca().legend(loc = 'lower right', frameon = True)
+    plt.xlim(0,1)
+    plt.savefig('images/ROC_Curve.jpg')
+
+    return prob_positive
+
 
 def print_model_stats(method, coeff_df, y_test, y_train, test_pred, train_pred):
     print('###################################')
@@ -136,27 +175,37 @@ def model_stats_table():
 
 if __name__ == '__main__':
     data = read_data()
-    data = data.rename(columns={'gender': 'Gender', 'raisedhands': 'RaisedHands'})
-    create_student_success(data, 'RaisedHands', 'VisITedResources', 'AnnouncementsView', 'Discussion')
+    data = data.rename(columns={'gender': 'Gender','NationalITy': 'Nationality', 'PlaceofBirth': 'Place of Birth', 'StageID': 'Stage ID', 
+                        'ParentschoolSatisfaction': 'Parentschool Satisfaction', 'StudentAbsenceDays': 'Student Absence Days', 
+                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'Announcements View'})
+    
+    create_student_success(data, 'Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
 
-    X = data[["RaisedHands","VisITedResources","AnnouncementsView","Discussion"]]
-    y = data["StudentSuccess"]
+    X = data[["Raised Hands","Visited Resources","Announcements View","Discussion"]]
+    y_1= data["Student Success"]
+    y_2 = data['Class']
 
     sys.stdout = open('data/output.txt', 'w')
 
-    coef_lr, y_test_lr, y_train_lr, test_pred_lr, train_pred_lr = linear_regression(X, y)
+    coef_lr, y_test_lr, y_train_lr, test_pred_lr, train_pred_lr = linear_regression(X, y_1)
     print_model_stats('Linear Regression', coef_lr, y_test_lr, y_train_lr, test_pred_lr, train_pred_lr)
 
-    coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr = ridge_regression(X, y)
+    coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr = ridge_regression(X, y_1)
     print_model_stats('Ridge Regression', coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr)
 
-    coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la = lasso_regression(X, y)
+    coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la = lasso_regression(X, y_1)
     print_model_stats('Lasso Regression', coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la)
 
     result_table = model_stats_table()
     print(result_table)
 
+    model_fit, x_test, y_test = logistic_regression (data, X)
+
+    prob_positive = ROC_plot(model_fit, x_test, y_test)
+    print('The ROC AUC score is {}'.format(roc_auc_score(y_test, prob_positive)))
+
     sys.stdout.close()
+
 
 
     

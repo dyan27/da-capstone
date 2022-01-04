@@ -20,7 +20,7 @@ def create_student_success(data,col1,col2,col3,col4):
     data["weighted_col3"]=data["weighted_col3"].astype('int64')
     data["weighted_col4"]=data["weighted_col4"].astype('int64')
 
-    data["StudentSuccess"]=((data[col1]*data['weighted_col1'])+(data[col2]*data['weighted_col2'])+
+    data["Student Success"]=((data[col1]*data['weighted_col1'])+(data[col2]*data['weighted_col2'])+
                       (data[col3]*data['weighted_col3'])+(data[col4]*data['weighted_col4']))/(data["weighted_col1"]+data["weighted_col2"]+data["weighted_col3"]+data["weighted_col4"])
 
     del data["weighted_col1"]
@@ -38,12 +38,12 @@ def visualize_student_success(col1, col2, i):
 
 def student_success_plot(col1, col2, col3, col4, col5, col6):
     plt.figure(figsize=(17,10), dpi=100)
-    visualize_student_success("StudentSuccess", col1, 1)
-    visualize_student_success("StudentSuccess", col2, 2)
-    visualize_student_success("StudentSuccess", col3, 3)
-    visualize_student_success("StudentSuccess", col4, 4)
-    visualize_student_success("StudentSuccess", col5, 5)
-    visualize_student_success("StudentSuccess", col6, 6)
+    visualize_student_success("Student Success", col1, 1)
+    visualize_student_success("Student Success", col2, 2)
+    visualize_student_success("Student Success", col3, 3)
+    visualize_student_success("Student Success", col4, 4)
+    visualize_student_success("Student Success", col5, 5)
+    visualize_student_success("Student Success", col6, 6)
     plt.tight_layout()
     plt.savefig('images/studentsuccess.jpg')
 
@@ -70,7 +70,7 @@ def linear_regression_plot(column):
     plt.figure(figsize=(18,5), dpi=100)
     for i in range(len(column)-1):
         plt.subplot(1,4,i+1)
-        sns.regplot(y=data[column[i]], x=data["StudentSuccess"], data=data)
+        sns.regplot(y=data[column[i]], x=data["Student Success"], data=data)
 
     plt.tight_layout()
     plt.savefig('images/linear.jpg')
@@ -83,16 +83,18 @@ def correlation(column):
 
 if __name__ == '__main__':
     data = read_data()
-    data = data.rename(columns={'gender': 'Gender', 'raisedhands': 'RaisedHands'})
+    data = data.rename(columns={'gender': 'Gender','NationalITy': 'Nationality', 'PlaceofBirth': 'Place of Birth', 'StageID': 'Stage ID', 
+                        'ParentschoolSatisfaction': 'Parentschool Satisfaction', 'StudentAbsenceDays': 'Student Absence Days', 
+                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'Announcements View'})
     
-    create_student_success('RaisedHands', 'VisITedResources', 'AnnouncementsView', 'Discussion')
+    create_student_success(data, 'Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
     
-    column_numerical = ['RaisedHands', 'VisITedResources', 'AnnouncementsView', 'Discussion', 'StudentSuccess']
-    column_nominal = ['Topic', 'NationalITy', 'StudentAbsenceDays', 'ParentschoolSatisfaction', 'Relation', 'StageID']
+    column_numerical = ['Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion', 'Student Success']
+    column_nominal = ['Topic', 'Nationality', 'Student Absence Days', 'Parentschool Satisfaction', 'Relation', 'Stage ID']
 
-    student_success_plot('Topic', 'NationalITy', 'StudentAbsenceDays', 'ParentschoolSatisfaction', 'Relation', 'StageID')
+    student_success_plot('Topic', 'Nationality', 'Student Absence Days', 'Parentschool Satisfaction', 'Relation', 'Stage ID')
 
-    class_plot('RaisedHands', 'VisITedResources', 'AnnouncementsView', 'Discussion')
+    class_plot('Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
 
     outlier_plot(column_numerical)
 

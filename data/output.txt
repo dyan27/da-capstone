@@ -13,11 +13,11 @@ MSE: 13.02629383325512
 RMSE: 3.6091957321895305
 R2 Square 0.9756403380684348
 __________________________________
-                   Coefficient
-RaisedHands           6.637684
-VisITedResources     11.212066
-AnnouncementsView     4.709670
-Discussion            6.683364
+                    Coefficient
+Raised Hands           6.637684
+Visited Resources     11.212066
+Announcements View     4.709670
+Discussion             6.683364
 ###################################
 Ridge Regression
 ###################################
@@ -33,11 +33,11 @@ MSE: 21.06144794745694
 RMSE: 4.589275318332617
 R2 Square 0.9606142961031992
 __________________________________
-                   Coefficient
-RaisedHands           6.503092
-VisITedResources      8.714492
-AnnouncementsView     5.169537
-Discussion            5.446862
+                    Coefficient
+Raised Hands           6.503092
+Visited Resources      8.714492
+Announcements View     5.169537
+Discussion             5.446862
 ###################################
 Lasso Regression
 ###################################
@@ -53,12 +53,30 @@ MSE: 13.043625595924349
 RMSE: 3.6115959901301737
 R2 Square 0.9756079270170103
 __________________________________
-                   Coefficient
-RaisedHands           6.618372
-VisITedResources     11.156064
-AnnouncementsView     4.681881
-Discussion            6.612540
+                    Coefficient
+Raised Hands           6.618372
+Visited Resources     11.156064
+Announcements View     4.681881
+Discussion             6.612540
                Model       MAE        MSE      RMSE  R2 Square  Cross Validation
 0  Linear Regression  3.037156  13.255695  3.640837   0.977097          0.962447
 1   Ridge Regression  3.954112  24.993395  4.999339   0.956816          0.962447
 2   Lasso Regression  3.048697  13.407763  3.661661   0.976834          0.962459
+Classification Report of Logistic Regression
+
+                precision    recall  f1-score   support
+
+    High Class       0.83      0.93      0.88        61
+Non-High Class       0.85      0.66      0.74        35
+
+      accuracy                           0.83        96
+     macro avg       0.84      0.80      0.81        96
+  weighted avg       0.84      0.83      0.83        96
+
+==========================================================
+Confusion Matrix of Logistic Regression
+
+    0   1
+0  57   4
+1  12  23
+The ROC AUC score is 0.8852459016393442
