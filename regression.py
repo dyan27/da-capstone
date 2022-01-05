@@ -41,8 +41,10 @@ def evaluate(true, predicted):
     return mae, mse, rmse, r2_square
 
 def linear_plot_student_success(column):
-    plt.figure(figsize=(5,5), dpi=100)
-    sns.regplot(y=data[column], x=data["Student Success"], data=data)
+    plt.figure(figsize=(10,5), dpi=100)
+    sns.regplot(x=data[column], y=data["Student Success"], data=data)
+    plt.xlabel(column, fontsize=16)
+    plt.ylabel('Student Success', fontsize=16)
     plt.tight_layout()
     plt.savefig('images/linear_{}.jpg'.format(column))
 
