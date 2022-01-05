@@ -6,12 +6,7 @@
   <img src="images/header.png" width = 300 height = 300>
 </p>
 
-## ***Table of Contents***
-1. [Overview](#Overview)
-2. [Data Information](#Data-Information)
-3. [Motivation](#Motivation)
-4. [Data Visualization](#Data-Visualization)
-5. [Statistical Modeling](#Statistical-Modeling)
-6. [Conclusion](#Conclusion)
-7. [Future Analysis](#Future-Analysis)
-8. [Photo and Data Credits](#Photo-and-Data-Credits)
+## ***Instructions***
+1. The explore.ipynb notebook has complete list of the python code and graphs.
+2. You can get all the images in the images folder by running the regression.py and visualization.py files.
+3. The output texts can be found in the output.txt file in the data folder.
