@@ -1,4 +1,36 @@
 ###################################
+Raised Hands
+###################################
+The slope is 0.6452648646133347
+The intercepts are 19.873344126381546
+The r-square is 0.708666882619455
+The p-value is 4.222623094376477e-130
+The standard error is 0.01892334593512315
+###################################
+Visited Resources
+###################################
+The slope is 0.6142409765369942
+The intercepts are 16.396482323144113
+The r-square is 0.7417534201806266
+The p-value is 1.2671237017914296e-142
+The standard error is 0.016577244669160468
+###################################
+Announcements View
+###################################
+The slope is 0.6922592513071986
+The intercepts are 23.80600268316544
+The r-square is 0.6097035206986403
+The p-value is 1.0284419890368739e-99
+The standard error is 0.025333359460877176
+###################################
+Discussion
+###################################
+The slope is 0.50364909511599
+The intercepts are 28.255996501733176
+The r-square is 0.3481062519997093
+The p-value is 2.386293409045615e-46
+The standard error is 0.03152438378245457
+###################################
 Linear Regression
 ###################################
 Test set evaluation:
@@ -18,65 +50,3 @@ Raised Hands           6.637684
 Visited Resources     11.212066
 Announcements View     4.709670
 Discussion             6.683364
-###################################
-Ridge Regression
-###################################
-Test set evaluation:
-MAE: 3.954111832273671
-MSE: 24.993394752998444
-RMSE: 4.999339431664792
-R2 Square 0.956816276287513
-__________________________________
-Train set evaluation:
-MAE: 3.5697760449962797
-MSE: 21.06144794745694
-RMSE: 4.589275318332617
-R2 Square 0.9606142961031992
-__________________________________
-                    Coefficient
-Raised Hands           6.503092
-Visited Resources      8.714492
-Announcements View     5.169537
-Discussion             5.446862
-###################################
-Lasso Regression
-###################################
-Test set evaluation:
-MAE: 3.0486966489893326
-MSE: 13.407763317361194
-RMSE: 3.661661278349104
-R2 Square 0.9768339934442126
-__________________________________
-Train set evaluation:
-MAE: 2.7905147348297548
-MSE: 13.043625595924349
-RMSE: 3.6115959901301737
-R2 Square 0.9756079270170103
-__________________________________
-                    Coefficient
-Raised Hands           6.618372
-Visited Resources     11.156064
-Announcements View     4.681881
-Discussion             6.612540
-               Model       MAE        MSE      RMSE  R2 Square  Cross Validation
-0  Linear Regression  3.037156  13.255695  3.640837   0.977097          0.962447
-1   Ridge Regression  3.954112  24.993395  4.999339   0.956816          0.962447
-2   Lasso Regression  3.048697  13.407763  3.661661   0.976834          0.962459
-Classification Report of Logistic Regression
-
-                precision    recall  f1-score   support
-
-    High Class       0.83      0.93      0.88        61
-Non-High Class       0.85      0.66      0.74        35
-
-      accuracy                           0.83        96
-     macro avg       0.84      0.80      0.81        96
-  weighted avg       0.84      0.83      0.83        96
-
-==========================================================
-Confusion Matrix of Logistic Regression
-
-    0   1
-0  57   4
-1  12  23
-The ROC AUC score is 0.8852459016393442

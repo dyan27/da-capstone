@@ -13,7 +13,7 @@ from sklearn.metrics import confusion_matrix, classification_report, roc_auc_sco
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
-from visualization import create_student_success, read_data
+from visualization import read_data, create_student_success
 import sys
 import warnings
 warnings.filterwarnings('ignore')
@@ -40,6 +40,22 @@ def evaluate(true, predicted):
     r2_square = metrics.r2_score(true, predicted)
     return mae, mse, rmse, r2_square
 
+def linear_plot_student_success(column):
+    plt.figure(figsize=(5,5), dpi=100)
+    sns.regplot(y=data[column], x=data["Student Success"], data=data)
+    plt.tight_layout()
+    plt.savefig('images/linear_{}.jpg'.format(column))
+
+def print_linear_status(column):
+    x = data[column]
+    y = data["Student Success"]
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x,y)
+    print('###################################')
+    print(column)
+    print('###################################')
+    print('The slope is {}\nThe intercepts are {}\nThe r-square is {}\nThe p-value is {}\nThe standard error is {}'.format(slope, intercept, r_value**2, p_value, std_err))
+    
+
 def linear_regression(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
     pipeline = Pipeline([('std_scalar', StandardScaler())])
@@ -58,6 +74,7 @@ def linear_regression(X, y):
                           columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
 
     pd.DataFrame({'True Values': y_test, 'Predicted Values': pred}).plot.scatter(x='True Values', y='Predicted Values')
+    plt.title('Student Success Linear Regression Model Fit')
     plt.savefig('images/linear_dist.jpg')
 
     pd.DataFrame({'Error Values': (y_test - pred)}).plot.kde()
@@ -159,17 +176,17 @@ def print_model_stats(method, coeff_df, y_test, y_train, test_pred, train_pred):
     print_evaluate(y_train, train_pred)
     print(coeff_df)
 
-def model_stats_table():
-    result = pd.DataFrame(data=[["Linear Regression", *evaluate(y_test_lr, test_pred_lr) , cross_val(LinearRegression())]], 
-                    columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
-    result_rr = pd.DataFrame(data=[["Ridge Regression", *evaluate(y_test_rr, test_pred_rr) , cross_val(Ridge())]], 
-                    columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
-    result_la = pd.DataFrame(data=[["Lasso Regression", *evaluate(y_test_la, test_pred_la) , cross_val(Lasso())]], 
-                    columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
-    result = result.append(result_rr, ignore_index=True)
-    result = result.append(result_la, ignore_index=True)
+# def model_stats_table():
+#     result = pd.DataFrame(data=[["Linear Regression", *evaluate(y_test_lr, test_pred_lr) , cross_val(LinearRegression())]], 
+#                     columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
+#     result_rr = pd.DataFrame(data=[["Ridge Regression", *evaluate(y_test_rr, test_pred_rr) , cross_val(Ridge())]], 
+#                     columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
+#     result_la = pd.DataFrame(data=[["Lasso Regression", *evaluate(y_test_la, test_pred_la) , cross_val(Lasso())]], 
+#                     columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
+#     result = result.append(result_rr, ignore_index=True)
+#     result = result.append(result_la, ignore_index=True)
     
-    return result
+#     return result
 
 
 
@@ -187,22 +204,36 @@ if __name__ == '__main__':
 
     sys.stdout = open('data/output.txt', 'w')
 
+    linear_plot_student_success('Raised Hands')
+    print_linear_status('Raised Hands')
+
+    linear_plot_student_success('Visited Resources')
+    print_linear_status('Visited Resources')
+
+    linear_plot_student_success('Announcements View')
+    print_linear_status('Announcements View')
+
+    linear_plot_student_success('Discussion')
+    print_linear_status('Discussion')
+
+
     coef_lr, y_test_lr, y_train_lr, test_pred_lr, train_pred_lr = linear_regression(X, y_1)
     print_model_stats('Linear Regression', coef_lr, y_test_lr, y_train_lr, test_pred_lr, train_pred_lr)
 
-    coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr = ridge_regression(X, y_1)
-    print_model_stats('Ridge Regression', coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr)
 
-    coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la = lasso_regression(X, y_1)
-    print_model_stats('Lasso Regression', coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la)
+    # coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr = ridge_regression(X, y_1)
+    # print_model_stats('Ridge Regression', coef_rr, y_test_rr, y_train_rr, test_pred_rr, train_pred_rr)
 
-    result_table = model_stats_table()
-    print(result_table)
+    # coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la = lasso_regression(X, y_1)
+    # print_model_stats('Lasso Regression', coef_la, y_test_la, y_train_la, test_pred_la, train_pred_la)
 
-    model_fit, x_test, y_test = logistic_regression (data, X)
+    # result_table = model_stats_table()
+    # print(result_table)
 
-    prob_positive = ROC_plot(model_fit, x_test, y_test)
-    print('The ROC AUC score is {}'.format(roc_auc_score(y_test, prob_positive)))
+    # model_fit, x_test, y_test = logistic_regression (data, X)
+
+    # prob_positive = ROC_plot(model_fit, x_test, y_test)
+    # print('The ROC AUC score is {}'.format(roc_auc_score(y_test, prob_positive)))
 
     sys.stdout.close()
 
