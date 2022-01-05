@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import stats
+import statsmodels.api as sm
 import seaborn as sns
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -66,6 +67,12 @@ def linear_regression(X, y):
 
     model = LinearRegression(normalize=True)
     model.fit(X_train,y_train)
+    model_ols = sm.OLS(y_train, X_train)
+    fit_ols = model_ols.fit()
+    fit_summary = fit_ols.summary()
+    print('###################################')
+    print(fit_summary)
+    print('###################################')
     coeff_df = pd.DataFrame(model.coef_, X.columns, columns=['Coefficient'])
     pred = model.predict(X_test)
 
