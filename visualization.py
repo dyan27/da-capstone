@@ -85,16 +85,16 @@ if __name__ == '__main__':
     data = read_data()
     data = data.rename(columns={'gender': 'Gender','NationalITy': 'Nationality', 'PlaceofBirth': 'Place of Birth', 'StageID': 'Stage ID', 
                         'ParentschoolSatisfaction': 'Parentschool Satisfaction', 'StudentAbsenceDays': 'Student Absence Days', 
-                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'Announcements View'})
+                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'View Announcements'})
     
-    create_student_success(data, 'Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
+    create_student_success(data, 'Raised Hands', 'Visited Resources', 'View Announcements', 'Discussion')
     
-    column_numerical = ['Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion', 'Student Success']
+    column_numerical = ['Raised Hands', 'Visited Resources', 'View Announcements', 'Discussion', 'Student Success']
     column_nominal = ['Topic', 'Nationality', 'Student Absence Days', 'Parentschool Satisfaction', 'Relation', 'Stage ID']
 
     student_success_plot('Topic', 'Nationality', 'Student Absence Days', 'Parentschool Satisfaction', 'Relation', 'Stage ID')
 
-    class_plot('Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
+    class_plot('Raised Hands', 'Visited Resources', 'View Announcements', 'Discussion')
 
     outlier_plot(column_numerical)
 
