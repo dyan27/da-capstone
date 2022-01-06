@@ -43,11 +43,11 @@ def evaluate(true, predicted):
 
 def linear_plot_student_success(column):
     plt.figure(figsize=(10,5), dpi=100)
-    sns.regplot(x=data[column], y=data["Student Success"], data=data)
+    sns.regplot(x=data[column], y=data["Student Success"], data=data, ci=None)
     plt.xlabel(column, fontsize=16)
     plt.ylabel('Student Success', fontsize=16)
     plt.tight_layout()
-    plt.savefig('images/linear_{}.jpg'.format(column))
+    plt.savefig('images/linear_{}.png'.format(column), transparent=True)
 
 def print_linear_status(column):
     x = data[column]
@@ -83,11 +83,15 @@ def linear_regression(X, y):
                           columns=['Model', 'MAE', 'MSE', 'RMSE', 'R2 Square', "Cross Validation"])
 
     pd.DataFrame({'True Values': y_test, 'Predicted Values': pred}).plot.scatter(x='True Values', y='Predicted Values')
-    plt.title('Student Success Linear Regression Model Fit')
-    plt.savefig('images/linear_dist.jpg')
+    plt.title('Student Success Linear Regression Model Fit', fontsize=16)
+    plt.xlabel('True Values', fontsize=16)
+    plt.ylabel('Predicted Values', fontsize=16)
+    plt.tight_layout()
+    plt.savefig('images/linear_dist.png', transparent = True)
 
     pd.DataFrame({'Error Values': (y_test - pred)}).plot.kde()
-    plt.savefig('images/linear_error.jpg')
+    plt.tight_layout()
+    plt.savefig('images/linear_error.png', transparent = True)
 
     return coeff_df, y_test, y_train, test_pred, train_pred
 
@@ -203,11 +207,11 @@ if __name__ == '__main__':
     data = read_data()
     data = data.rename(columns={'gender': 'Gender','NationalITy': 'Nationality', 'PlaceofBirth': 'Place of Birth', 'StageID': 'Stage ID', 
                         'ParentschoolSatisfaction': 'Parentschool Satisfaction', 'StudentAbsenceDays': 'Student Absence Days', 
-                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'Announcements View'})
+                        'raisedhands': 'Raised Hands', 'VisITedResources': 'Visited Resources', 'AnnouncementsView': 'View Announcements'})
     
-    create_student_success(data, 'Raised Hands', 'Visited Resources', 'Announcements View', 'Discussion')
+    create_student_success(data, 'Raised Hands', 'Visited Resources', 'View Announcements', 'Discussion')
 
-    X = data[["Raised Hands","Visited Resources","Announcements View","Discussion"]]
+    X = data[["Raised Hands","Visited Resources","View Announcements","Discussion"]]
     y_1= data["Student Success"]
     y_2 = data['Class']
 
@@ -219,8 +223,8 @@ if __name__ == '__main__':
     linear_plot_student_success('Visited Resources')
     print_linear_status('Visited Resources')
 
-    linear_plot_student_success('Announcements View')
-    print_linear_status('Announcements View')
+    linear_plot_student_success('View Announcements')
+    print_linear_status('View Announcements')
 
     linear_plot_student_success('Discussion')
     print_linear_status('Discussion')

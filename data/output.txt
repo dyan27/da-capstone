@@ -15,7 +15,7 @@ The r-square is 0.7417534201806266
 The p-value is 1.2671237017914296e-142
 The standard error is 0.016577244669160468
 ###################################
-Announcements View
+View Announcements
 ###################################
 The slope is 0.6922592513071986
 The intercepts are 23.80600268316544
@@ -36,8 +36,8 @@ The standard error is 0.03152438378245457
 Dep. Variable:        Student Success   R-squared (uncentered):                   0.162
 Model:                            OLS   Adj. R-squared (uncentered):              0.152
 Method:                 Least Squares   F-statistic:                              16.03
-Date:                Wed, 05 Jan 2022   Prob (F-statistic):                    5.18e-12
-Time:                        15:20:59   Log-Likelihood:                         -1804.2
+Date:                Thu, 06 Jan 2022   Prob (F-statistic):                    5.18e-12
+Time:                        10:44:03   Log-Likelihood:                         -1804.2
 No. Observations:                 336   AIC:                                      3616.
 Df Residuals:                     332   BIC:                                      3632.
 Df Model:                           4                                                  
@@ -78,5 +78,5 @@ __________________________________
                     Coefficient
 Raised Hands           6.637684
 Visited Resources     11.212066
-Announcements View     4.709670
+View Announcements     4.709670
 Discussion             6.683364
